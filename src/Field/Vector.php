@@ -3,7 +3,7 @@
  * php-binary
  * A PHP library for parsing structured binary streams
  *
- * @package  php-binary
+ * @package	 php-binary
  * @author Damien Walsh <me@damow.net>
  */
 namespace Binary\Field;
@@ -19,9 +19,9 @@ use Binary\Stream\StreamInterface;
  */
 class Vector extends AbstractSizedField
 {
-    /**
-     * {@inheritdoc}
-     */
+	/**
+	 * {@inheritdoc}
+	 */
 	public function read(StreamInterface $stream, DataSet $result)
 	{
 		$vec=array();
@@ -38,13 +38,13 @@ class Vector extends AbstractSizedField
 		$result->setValue($this->name, $vec);
 	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function write(StreamInterface $stream, DataSet $result)
-    {
-        //Writing floats currently untested
-        $bytes = $result->getValue($this->name);
-        $stream->write(pack('f', intval($bytes)));
-    }
+	/**
+	 * {@inheritdoc}
+	 */
+	public function write(StreamInterface $stream, DataSet $result)
+	{
+		//Writing floats currently untested
+		$bytes = $result->getValue($this->name);
+		$stream->write(pack('f', intval($bytes)));
+	}
 }

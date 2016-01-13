@@ -3,7 +3,7 @@
  * php-binary
  * A PHP library for parsing structured binary streams
  *
- * @package  php-binary
+ * @package	 php-binary
  * @author Damien Walsh <me@damow.net>
  */
 namespace Binary\Validator;
@@ -18,9 +18,9 @@ use Binary\Exception\ValidatorException;
  */
 interface ValidatorInterface
 {
-    /**
-     * @param mixed $input The value that should be validated
-     * @throws ValidatorException
-     */
-    public function validate($input);
+	/**
+	 * @param mixed $input The value that should be validated
+	 * @throws ValidatorException
+	 */
+	public function validate($input);
 }

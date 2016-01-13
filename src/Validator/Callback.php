@@ -3,7 +3,7 @@
  * php-binary
  * A PHP library for parsing structured binary streams
  *
- * @package  php-binary
+ * @package	 php-binary
  * @author Damien Walsh <me@damow.net>
  */
 namespace Binary\Validator;
@@ -25,19 +25,19 @@ use Binary\Exception\ValidatorException;
  */
 class Callback extends AbstractValidator
 {
-    /**
-     * @param $input
-     * @throws \Binary\Exception\ValidatorException
-     */
-    public function validate($input)
-    {
-        if (is_callable($this->desiredValue)) {
+	/**
+	 * @param $input
+	 * @throws \Binary\Exception\ValidatorException
+	 */
+	public function validate($input)
+	{
+		if (is_callable($this->desiredValue)) {
 
-            $result = call_user_func($this->desiredValue, $input);
+			$result = call_user_func($this->desiredValue, $input);
 
-            if ($result !== true) {
-                throw new ValidatorException($result);
-            }
-        }
-    }
+			if ($result !== true) {
+				throw new ValidatorException($result);
+			}
+		}
+	}
 }

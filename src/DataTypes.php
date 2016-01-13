@@ -3,7 +3,7 @@
  * php-binary
  * A PHP library for parsing structured binary streams
  *
- * @package  php-binary
+ * @package	 php-binary
  * @author Damien Walsh <me@damow.net>
  */
 namespace Binary;

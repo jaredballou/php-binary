@@ -3,7 +3,7 @@
  * php-binary
  * A PHP library for parsing structured binary streams
  *
- * @package  php-binary
+ * @package	 php-binary
  * @author Damien Walsh <me@damow.net>
  */
 namespace Binary\Field;
@@ -26,112 +26,112 @@ use Binary\DataSet;
  */
 class Delimited extends AbstractField
 {
-    const DEFAULT_DELIMITER = "\n";
-    const DEFAULT_SEARCH_LENGTH = 128;
+	const DEFAULT_DELIMITER = "\n";
+	const DEFAULT_SEARCH_LENGTH = 128;
 
-    /**
-     * The sequence of bytes that marks the end of the field.
-     *
-     * @public \Binary\Field\Property\PropertyInterface
-     */
-    protected $delimiter;
+	/**
+	 * The sequence of bytes that marks the end of the field.
+	 *
+	 * @public \Binary\Field\Property\PropertyInterface
+	 */
+	protected $delimiter;
 
-    /**
-     * The maximum number of bytes to search ahead looking for $delimiter.
-     *
-     * @public \Binary\Field\Property\PropertyInterface
-     */
-    protected $searchLength;
+	/**
+	 * The maximum number of bytes to search ahead looking for $delimiter.
+	 *
+	 * @public \Binary\Field\Property\PropertyInterface
+	 */
+	protected $searchLength;
 
-    /**
-     * Set up the field
-     */
-    public function __construct()
-    {
-        $this->delimiter = new Property(self::DEFAULT_DELIMITER);
-        $this->searchLength = new Property(self::DEFAULT_SEARCH_LENGTH);
-    }
+	/**
+	 * Set up the field
+	 */
+	public function __construct()
+	{
+		$this->delimiter = new Property(self::DEFAULT_DELIMITER);
+		$this->searchLength = new Property(self::DEFAULT_SEARCH_LENGTH);
+	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function read(StreamInterface $stream, DataSet $result)
-    {
-        // Get the delimiter to search for
-        $delimiter = $this->delimiter->get($result);
-        $delimiterLength = strlen($delimiter);
-        $value = '';
+	/**
+	 * {@inheritdoc}
+	 */
+	public function read(StreamInterface $stream, DataSet $result)
+	{
+		// Get the delimiter to search for
+		$delimiter = $this->delimiter->get($result);
+		$delimiterLength = strlen($delimiter);
+		$value = '';
 
-        while (false !== ($byte = $stream->readByte())) {
-            $value .= $byte;
+		while (false !== ($byte = $stream->readByte())) {
+			$value .= $byte;
 
-            // Does the string now end with the requested delimiter?
-            if (substr($value, strlen($value) - $delimiterLength, $delimiterLength) === $delimiter) {
-                break;
-            }
+			// Does the string now end with the requested delimiter?
+			if (substr($value, strlen($value) - $delimiterLength, $delimiterLength) === $delimiter) {
+				break;
+			}
 
-            // Reached the limit of the lookahead?
-            if (strlen($value) > $this->searchLength->get($result)) {
-                break;
-            }
-        }
+			// Reached the limit of the lookahead?
+			if (strlen($value) > $this->searchLength->get($result)) {
+				break;
+			}
+		}
 
-        // Strip the delimiter and add the read content to the result DataSet
-        $value = substr($value, 0, strlen($value) - $delimiterLength);
+		// Strip the delimiter and add the read content to the result DataSet
+		$value = substr($value, 0, strlen($value) - $delimiterLength);
 
-        // Validate and return
-        $this->validate($value);
-        $result->setValue($this->name, $value);
-    }
+		// Validate and return
+		$this->validate($value);
+		$result->setValue($this->name, $value);
+	}
 
-    /**
-     * Write the value for this field, then the delimiter at the end.
-     *
-     * {@inheritdoc}
-     */
-    public function write(StreamInterface $stream, DataSet $result)
-    {
-        $stream->write($result->getValue($this->getName()));
-        $stream->write($this->delimiter->get($result));
-    }
+	/**
+	 * Write the value for this field, then the delimiter at the end.
+	 *
+	 * {@inheritdoc}
+	 */
+	public function write(StreamInterface $stream, DataSet $result)
+	{
+		$stream->write($result->getValue($this->getName()));
+		$stream->write($this->delimiter->get($result));
+	}
 
-    /**
-     * @param PropertyInterface $searchLength
-     *
-     * @return $this
-     */
-    public function setSearchLength(PropertyInterface $searchLength)
-    {
-        $this->searchLength = $searchLength;
+	/**
+	 * @param PropertyInterface $searchLength
+	 *
+	 * @return $this
+	 */
+	public function setSearchLength(PropertyInterface $searchLength)
+	{
+		$this->searchLength = $searchLength;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * @return mixed
-     */
-    public function getSearchLength()
-    {
-        return $this->searchLength;
-    }
+	/**
+	 * @return mixed
+	 */
+	public function getSearchLength()
+	{
+		return $this->searchLength;
+	}
 
-    /**
-     * @param PropertyInterface $delimiter
-     *
-     * @return $this
-     */
-    public function setDelimiter(PropertyInterface $delimiter)
-    {
-        $this->delimiter = $delimiter;
+	/**
+	 * @param PropertyInterface $delimiter
+	 *
+	 * @return $this
+	 */
+	public function setDelimiter(PropertyInterface $delimiter)
+	{
+		$this->delimiter = $delimiter;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * @return mixed
-     */
-    public function getDelimiter()
-    {
-        return $this->delimiter;
-    }
+	/**
+	 * @return mixed
+	 */
+	public function getDelimiter()
+	{
+		return $this->delimiter;
+	}
 }

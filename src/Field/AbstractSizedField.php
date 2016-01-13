@@ -3,7 +3,7 @@
  * php-binary
  * A PHP library for parsing structured binary streams
  *
- * @package  php-binary
+ * @package	 php-binary
  * @author Damien Walsh <me@damow.net>
  */
 namespace Binary\Field;
@@ -20,29 +20,29 @@ use Binary\Field\Property\PropertyInterface;
  */
 abstract class AbstractSizedField extends AbstractField
 {
-    /**
-     * The size of the field.
-     *
-     * @protected PropertyInterface
-     */
-    protected $size;
+	/**
+	 * The size of the field.
+	 *
+	 * @protected PropertyInterface
+	 */
+	protected $size;
 
-    /**
-     * @param PropertyInterface $size
-     * @return $this
-     */
-    public function setSize(PropertyInterface $size)
-    {
-        $this->size = $size;
+	/**
+	 * @param PropertyInterface $size
+	 * @return $this
+	 */
+	public function setSize(PropertyInterface $size)
+	{
+		$this->size = $size;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * @return PropertyInterface
-     */
-    public function getSize()
-    {
-        return $this->size;
-    }
+	/**
+	 * @return PropertyInterface
+	 */
+	public function getSize()
+	{
+		return $this->size;
+	}
 }

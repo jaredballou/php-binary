@@ -3,7 +3,7 @@
  * php-binary
  * A PHP library for parsing structured binary streams
  *
- * @package  php-binary
+ * @package	 php-binary
  * @author Damien Walsh <me@damow.net>
  */
 namespace Binary\Field;
@@ -21,91 +21,91 @@ use Binary\DataSet;
  */
 class Compound extends AbstractField
 {
-    /**
-     * @protected FieldInterface[] The fields enclosed within this compound field.
-     */
-    protected $fields = array();
+	/**
+	 * @protected FieldInterface[] The fields enclosed within this compound field.
+	 */
+	protected $fields = array();
 
-    /**
-     * @protected PropertyInterface The number of times this field will be repeated.
-     */
-    protected $count;
+	/**
+	 * @protected PropertyInterface The number of times this field will be repeated.
+	 */
+	protected $count;
 
-    /**
-     * Assign properties as actual properties.
-     */
-    public function __construct()
-    {
-        $this->name = $this->getName();
-        $this->count = new Property($this->count);
-    }
+	/**
+	 * Assign properties as actual properties.
+	 */
+	public function __construct()
+	{
+		$this->name = $this->getName();
+		$this->count = new Property($this->count);
+	}
 
-    /**
-     * @param PropertyInterface $count The number of times this compound field is repeated.
-     *
-     * @return $this
-     */
-    public function setCount(PropertyInterface $count)
-    {
-        $this->count = $count;
+	/**
+	 * @param PropertyInterface $count The number of times this compound field is repeated.
+	 *
+	 * @return $this
+	 */
+	public function setCount(PropertyInterface $count)
+	{
+		$this->count = $count;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * @param FieldInterface $field The field to add to the compound field.
-     *
-     * @return $this
-     */
-    public function addField(FieldInterface $field)
-    {
-        $this->fields[] = $field;
+	/**
+	 * @param FieldInterface $field The field to add to the compound field.
+	 *
+	 * @return $this
+	 */
+	public function addField(FieldInterface $field)
+	{
+		$this->fields[] = $field;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function read(StreamInterface $stream, DataSet $result)
-    {
-        $result->push($this->getName());
-        $count = isset($this->count) ? $this->count->get($result) : 1;
+	/**
+	 * {@inheritdoc}
+	 */
+	public function read(StreamInterface $stream, DataSet $result)
+	{
+		$result->push($this->getName());
+		$count = isset($this->count) ? $this->count->get($result) : 1;
 //var_dump($this->count,$count);
 //exit;
-        // Read this compound field $count times
-        for ($iteration = 0; $iteration < $count; $iteration ++) {
-            $result->push($iteration);
+		// Read this compound field $count times
+		for ($iteration = 0; $iteration < $count; $iteration ++) {
+			$result->push($iteration);
 
-            foreach ($this->fields as $field) {
-                $field->read($stream, $result);
-            }
+			foreach ($this->fields as $field) {
+				$field->read($stream, $result);
+			}
 
-            $result->pop();
-        }
+			$result->pop();
+		}
 
-        $result->pop();
-    }
+		$result->pop();
+	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function write(StreamInterface $stream, DataSet $result)
-    {
-        $result->push($this->getName());
-        $count = isset($this->count) ? $this->count->get($result) : 1;
+	/**
+	 * {@inheritdoc}
+	 */
+	public function write(StreamInterface $stream, DataSet $result)
+	{
+		$result->push($this->getName());
+		$count = isset($this->count) ? $this->count->get($result) : 1;
 
-        // Read this compound field $count times
-        for ($iteration = 0; $iteration < $count; $iteration ++) {
-            $result->push($iteration);
+		// Read this compound field $count times
+		for ($iteration = 0; $iteration < $count; $iteration ++) {
+			$result->push($iteration);
 
-            foreach ($this->fields as $field) {
-                $field->write($stream, $result);
-            }
+			foreach ($this->fields as $field) {
+				$field->write($stream, $result);
+			}
 
-            $result->pop();
-        }
+			$result->pop();
+		}
 
-        $result->pop();
-    }
+		$result->pop();
+	}
 }

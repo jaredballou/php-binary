@@ -3,7 +3,7 @@
  * php-binary
  * A PHP library for parsing structured binary streams
  *
- * @package  php-binary
+ * @package	 php-binary
  * @author Damien Walsh <me@damow.net>
  */
 namespace Binary\Validator;
@@ -15,31 +15,31 @@ namespace Binary\Validator;
  */
 abstract class AbstractValidator implements ValidatorInterface
 {
-    protected $desiredValue;
+	protected $desiredValue;
 
-    /**
-     * Initialise a new validator.
-     *
-     * @param mixed $desiredValue
-     */
-    public function __construct($desiredValue = null)
-    {
-        $this->desiredValue = $desiredValue;
-    }
+	/**
+	 * Initialise a new validator.
+	 *
+	 * @param mixed $desiredValue
+	 */
+	public function __construct($desiredValue = null)
+	{
+		$this->desiredValue = $desiredValue;
+	}
 
-    /**
-     * @param mixed $desiredValue
-     */
-    public function setDesiredValue($desiredValue)
-    {
-        $this->desiredValue = $desiredValue;
-    }
+	/**
+	 * @param mixed $desiredValue
+	 */
+	public function setDesiredValue($desiredValue)
+	{
+		$this->desiredValue = $desiredValue;
+	}
 
-    /**
-     * @return mixed
-     */
-    public function getDesiredValue()
-    {
-        return $this->desiredValue;
-    }
+	/**
+	 * @return mixed
+	 */
+	public function getDesiredValue()
+	{
+		return $this->desiredValue;
+	}
 }

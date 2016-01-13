@@ -3,7 +3,7 @@
  * php-binary
  * A PHP library for parsing structured binary streams
  *
- * @package  php-binary
+ * @package	 php-binary
  * @author Damien Walsh <me@damow.net>
  */
 namespace Binary\Validator;
@@ -18,18 +18,18 @@ use Binary\Exception\ValidatorException;
  */
 class Equal extends AbstractValidator
 {
-    /**
-     * @param $input
-     * @throws \Binary\Exception\ValidatorException
-     */
-    public function validate($input)
-    {
-        if ($input != $this->desiredValue) {
-            throw new ValidatorException(
-                'Field value is ' . $input . '. ' .
-                'Must be equal to ' .
-                $this->desiredValue
-            );
-        }
-    }
+	/**
+	 * @param $input
+	 * @throws \Binary\Exception\ValidatorException
+	 */
+	public function validate($input)
+	{
+		if ($input != $this->desiredValue) {
+			throw new ValidatorException(
+				'Field value is ' . $input . '. ' .
+				'Must be equal to ' .
+				$this->desiredValue
+			);
+		}
+	}
 }

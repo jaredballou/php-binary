@@ -3,7 +3,7 @@
  * php-binary
  * A PHP library for parsing structured binary streams
  *
- * @package  php-binary
+ * @package	 php-binary
  * @author Damien Walsh <me@damow.net>
  */
 namespace Binary\Field\Property;
@@ -18,11 +18,11 @@ use Binary\DataSet;
  */
 interface PropertyInterface
 {
-    /**
-     * Get the value of the property for the given DataSet.
-     *
-     * @param DataSet $result
-     * @return mixed
-     */
-    public function get(DataSet $result);
+	/**
+	 * Get the value of the property for the given DataSet.
+	 *
+	 * @param DataSet $result
+	 * @return mixed
+	 */
+	public function get(DataSet $result);
 }
