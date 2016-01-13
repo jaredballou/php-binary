@@ -7,7 +7,7 @@
  * @author Damien Walsh <me@damow.net>
  */
 namespace Binary\Field;
-
+use Binary\Field\Property\Property;
 use Binary\DataSet;
 use Binary\Stream\StreamInterface;
 
@@ -19,6 +19,11 @@ use Binary\Stream\StreamInterface;
  */
 class Float extends AbstractSizedField
 {
+	// Set size to 4 bytes as a default
+	public function __construct()
+	{
+		$this->setSize(new Property(4));
+	}
     /**
      * {@inheritdoc}
      */

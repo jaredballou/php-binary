@@ -10,7 +10,8 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": ">=5.3.0"
+        "php": ">=5.3.0",
+        "themainframe/php-binary": "dev-master"
     },
     "autoload": {
         "psr-4": {
@@ -23,4 +24,3 @@
         }
     }
 }
-

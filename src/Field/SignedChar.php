@@ -12,16 +12,16 @@ use Binary\DataSet;
 use Binary\Stream\StreamInterface;
 
 /**
- * UnsignedInteger
+ * SignedChar
  * Field.
  *
  * @since 1.0
  */
-class UnsignedInteger extends AbstractSizedField
+class SignedChar extends AbstractSizedField
 {
 	public function __construct()
 	{
-		$this->setSize(new Property(4));
+		$this->setSize(new Property(1));
 	}
     /**
      * {@inheritdoc}
@@ -34,7 +34,7 @@ class UnsignedInteger extends AbstractSizedField
             $data = str_pad($data, 2, "\0", STR_PAD_LEFT);
         }
 
-        $unpacked = unpack('I', $data);
+        $unpacked = unpack('c', $data);
         $this->validate($unpacked[1]);
         $result->setValue($this->getName(), $unpacked[1]);
     }
@@ -49,8 +49,8 @@ class UnsignedInteger extends AbstractSizedField
         $bytes = $result->getValue($this->name);
 
         for ($i = 0; $i < $dataSize; $i++) {
-            $unsignedByte = (($bytes >> (($dataSize - (1 + $i)) * 8)) & 0xff);
-            $stream->write(pack('C', intval($unsignedByte) & 0xff));
+            $signedByte = (($bytes >> (($dataSize - (1 + $i)) * 8)) & 0xff);
+            $stream->write(pack('C', intval($signedByte) & 0xff));
         }
     }
 }

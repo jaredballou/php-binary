@@ -12,16 +12,19 @@ use Binary\DataSet;
 use Binary\Stream\StreamInterface;
 
 /**
- * UnsignedInteger
+ * Vector
  * Field.
  *
  * @since 1.0
  */
-class UnsignedInteger extends AbstractSizedField
+class Vector extends AbstractSizedField
 {
-	public function __construct()
+	var $dimensions=3;
+	// Set size to 4 bytes as a default
+	public function __construct($dim=3)
 	{
-		$this->setSize(new Property(4));
+		$this->dimensions = $dim;
+		$this->setSize(new Property(4*$this->dimensions));
 	}
     /**
      * {@inheritdoc}
@@ -33,10 +36,14 @@ class UnsignedInteger extends AbstractSizedField
         if (strlen($data) < 2) {
             $data = str_pad($data, 2, "\0", STR_PAD_LEFT);
         }
-
-        $unpacked = unpack('I', $data);
-        $this->validate($unpacked[1]);
-        $result->setValue($this->getName(), $unpacked[1]);
+	$vec=array();
+	for ($i=0;$i<3;$i++)
+	{
+	        $unpacked = unpack('f', $data);
+        	$this->validate($unpacked[1]);
+		$vec[$i]=$unpacked[1];
+	}
+        $result->setValue($this->name, $vec);
     }
 
     /**
@@ -44,13 +51,8 @@ class UnsignedInteger extends AbstractSizedField
      */
     public function write(StreamInterface $stream, DataSet $result)
     {
-        $dataSize = $this->size->get($result);
-
+        //Writing floats currently untested
         $bytes = $result->getValue($this->name);
-
-        for ($i = 0; $i < $dataSize; $i++) {
-            $unsignedByte = (($bytes >> (($dataSize - (1 + $i)) * 8)) & 0xff);
-            $stream->write(pack('C', intval($unsignedByte) & 0xff));
-        }
+        $stream->write(pack('f', intval($bytes)));
     }
 }
